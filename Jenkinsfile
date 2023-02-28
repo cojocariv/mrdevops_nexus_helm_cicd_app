@@ -12,7 +12,7 @@ pipeline{
             }
             steps{
                 script {
-                    withSonarQubeEnv(credentialsId: 'sonar-credentials') {
+                    withSonarQubeEnv(credentialsId: 'sonar-secret') {
                         sh 'mvn clean package sonar:sonar'
                     }
                 }
