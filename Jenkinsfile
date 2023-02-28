@@ -18,6 +18,13 @@ pipeline{
                 }
             }
         }
+        stage('docker build and docker push to nexus repo'){
+            steps{
+                script{
+                    
+                }
+            }
+        }
         /* stage('Quality gate status'){
             steps{
                 script{
