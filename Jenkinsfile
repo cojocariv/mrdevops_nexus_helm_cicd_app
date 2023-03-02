@@ -1,7 +1,9 @@
 pipeline{
 
     agent any
-
+    environment{
+        VERSION = "${env.BUILD_ID}"
+    }
     stages{
         stage("Sonar quality check"){
 
@@ -18,13 +20,24 @@ pipeline{
                 }
             }
         }
-        /* stage('docker build and docker push to nexus repo'){
+        stage('docker build and docker push to nexus repo'){
             steps{
                 script{
-                    
+                    withCredentials([string(credentialsId: 'nexus', variable: 'nexus_creds')]) {
+                     sh '''
+                     docker build -t 192.168.100.49:8083/springapp:${VERSION} .
+
+                     docker login -u admin -p $nexus_creds 192.168.100.49:8083
+
+                     docker push 192.168.100.49:8083/springapp:${VERSION}
+
+                     docker rmi 192.168.100.49:8083/springapp:${VERSION}
+
+                     '''
+                    }
                 }
             }
-        } */
+        }
         /* stage('Quality gate status'){
             steps{
                 script{
