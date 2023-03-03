@@ -38,13 +38,15 @@ pipeline{
                 }
             }
         }
-        /* stage('Quality gate status'){
+        stage('Identifying misconfigs using datree in helm charts'){
             steps{
                 script{
-                    waitForQualityGate abortPipeline: false, credentialsId: 'sonar-secret'
+                    dir('kubernetes/myapp/') {
+                        sh 'helm datree test .'
+}
                 }
             }
-        }*/
+        }
         
     }
     post {
